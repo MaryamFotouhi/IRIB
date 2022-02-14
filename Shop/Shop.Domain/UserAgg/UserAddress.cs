@@ -6,7 +6,7 @@ namespace Shop.Domain.UserAgg
     public class UserAddress : BaseEntity
     {
         public UserAddress(string shire, string city, string postalCode, string postalAddress,
-            string phoneNumber, string name, string family, string nationalCode,)
+            string phoneNumber, string name, string family, string nationalCode)
         {
             Guard(shire, city, postalCode, postalAddress, phoneNumber, name, family, nationalCode);
             Shire = shire;
