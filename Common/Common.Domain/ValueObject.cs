@@ -10,12 +10,12 @@ namespace Common.Domain
     public class IgnoreMemberAttribute : Attribute
     {
     }
-    public abstract class BaseValueObject : IEquatable<BaseValueObject>
+    public abstract class ValueObject : IEquatable<ValueObject>
     {
         private List<PropertyInfo> properties;
         private List<FieldInfo> fields;
 
-        public static bool operator ==(BaseValueObject obj1, BaseValueObject obj2)
+        public static bool operator ==(ValueObject obj1, ValueObject obj2)
         {
             if (object.Equals(obj1, null))
             {
@@ -28,12 +28,12 @@ namespace Common.Domain
             return obj1.Equals(obj2);
         }
 
-        public static bool operator !=(BaseValueObject obj1, BaseValueObject obj2)
+        public static bool operator !=(ValueObject obj1, ValueObject obj2)
         {
             return !(obj1 == obj2);
         }
 
-        public bool Equals(BaseValueObject obj)
+        public bool Equals(ValueObject obj)
         {
             return Equals(obj as object);
         }

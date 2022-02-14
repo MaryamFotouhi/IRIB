@@ -10,9 +10,9 @@ namespace Shop.Domain.UserAgg
     public class User : AggregateRoot
     {
         public User(string name, string family, string phoneNumber, string email, string password,
-            Gender gender,IDomainUserService domainService)
+            Gender gender, IDomainUserService domainService)
         {
-            Guard(phoneNumber,email,domainService);
+            Guard(phoneNumber, email, domainService);
             Name = name;
             Family = family;
             PhoneNumber = phoneNumber;
@@ -33,9 +33,9 @@ namespace Shop.Domain.UserAgg
 
         public static User Register(string phoneNumber, string email, string password, IDomainUserService domainService)
         {
-            return new User("","",phoneNumber,email,password,Enums.Gender.None,domainService);
+            return new User("", "", phoneNumber, email, password, Enums.Gender.None, domainService);
         }
-        public void Edit(string name, string family, string phoneNumber, string email, Gender gender,IDomainUserService domainService)
+        public void Edit(string name, string family, string phoneNumber, string email, Gender gender, IDomainUserService domainService)
         {
             Guard(phoneNumber, email, domainService);
             Name = name;
@@ -53,24 +53,29 @@ namespace Shop.Domain.UserAgg
         {
             var oldAddress = Addresses.FirstOrDefault(a => a.Id == address.Id);
             if (oldAddress == null)
+            {
                 throw new NullOrEmptyDomainDataException("Address Not Found");
+            }
             Addresses.Remove(oldAddress);
             Addresses.Add(address);
         }
         public void DeleteAddress(long addressId)
         {
-            var oldAddress = Addresses.FirstOrDefault(a => a.Id == addressId);
-            if (oldAddress == null)
+            var currentAddress = Addresses.FirstOrDefault(a => a.Id == addressId);
+            if (currentAddress == null)
+            {
                 throw new NullOrEmptyDomainDataException("Address Not Found");
-            Addresses.Remove(oldAddress);
+            }
+            Addresses.Remove(currentAddress);
         }
         public void ChargeWallet(Wallet wallet)
         {
+            wallet.UserId = Id;
             Wallets.Add(wallet);
         }
         public void SetRoles(List<UserRole> roles)
         {
-            roles.ForEach(r=>r.UserId=Id);
+            roles.ForEach(r => r.UserId = Id);
             Roles.Clear();
             Roles.AddRange(roles);
         }

@@ -10,7 +10,7 @@ namespace Shop.Domain.UserAgg
         public Wallet(int price, string desciption, bool isFinally, DateTime? finallyDate, WalletType type)
         {
             if (price < 500)
-                throw new InvalidDomainDataException();
+                throw new InvalidDomainDataException("مبلغ به اندازه کافی نمی باشد!");
             Price = price;
             Desciption = desciption;
             IsFinally = isFinally;
