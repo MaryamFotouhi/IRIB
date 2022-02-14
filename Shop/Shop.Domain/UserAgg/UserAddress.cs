@@ -5,6 +5,10 @@ namespace Shop.Domain.UserAgg
 {
     public class UserAddress : BaseEntity
     {
+        private UserAddress()
+        {
+
+        }
         public UserAddress(string shire, string city, string postalCode, string postalAddress,
             string phoneNumber, string name, string family, string nationalCode)
         {
@@ -48,7 +52,7 @@ namespace Shop.Domain.UserAgg
         {
             ActiveAddress = true;
         }
-        public void Guard(string shire, string city, string postalCode, string postalAddress,
+        private void Guard(string shire, string city, string postalCode, string postalAddress,
             string phoneNumber, string name, string family, string nationalCode)
         {
             NullOrEmptyDomainDataException.CheckString(shire, nameof(shire));

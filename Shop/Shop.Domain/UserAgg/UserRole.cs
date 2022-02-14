@@ -4,6 +4,10 @@ namespace Shop.Domain.UserAgg
 {
     public class UserRole : BaseEntity
     {
+        private UserRole()
+        {
+
+        }
         public UserRole(long roleId)
         {
             RoleId = roleId;

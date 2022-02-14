@@ -5,6 +5,10 @@ namespace Shop.Domain.OrderAgg
 {
     public class OrderItem:BaseEntity
     {
+        private OrderItem()
+        {
+
+        }
         public OrderItem(long inventoryId, int count, int price)
         {
             CountGuard(count);
@@ -30,14 +34,14 @@ namespace Shop.Domain.OrderAgg
             PriceGuard(newPrice);
             Price = newPrice;
         }
-        public void CountGuard(int count)
+        private void CountGuard(int count)
         {
             if (count < 1)
             {
                 throw new InvalidDomainDataException("تعداد نامعتبر است!");
             }
         }
-        public void PriceGuard(int price)
+        private void PriceGuard(int price)
         {
             if (price < 1)
             {
