@@ -15,8 +15,6 @@ namespace Common.Domain.Utils
         public static string SetUnReadableEmail(this string email)
         {
             email = email.Split('@')[0];
-            var emailLenght = email.Length;
-            email = "..." + email.Substring(0, emailLenght - 1);
 
             return email;
         }
