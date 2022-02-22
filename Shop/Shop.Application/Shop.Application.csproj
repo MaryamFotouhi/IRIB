@@ -4,4 +4,40 @@
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="Orders\AddItem\" />
+    <Folder Include="Orders\ChangeCount\" />
+    <Folder Include="Orders\DeleteItem\" />
+    <Folder Include="Products\AddImage\" />
+    <Folder Include="Products\Create\" />
+    <Folder Include="Products\DeleteImage\" />
+    <Folder Include="Products\Edit\" />
+    <Folder Include="Roles\Create\" />
+    <Folder Include="Roles\Edit\" />
+    <Folder Include="Sellers\DeleteInventory\" />
+    <Folder Include="Sellers\EditInventory\" />
+    <Folder Include="Sellers\Create\" />
+    <Folder Include="Sellers\Edit\" />
+    <Folder Include="Sellers\ChangeStatus\" />
+    <Folder Include="Sellers\AddInventory\" />
+    <Folder Include="SiteEntities\Banner\" />
+    <Folder Include="SiteEntities\Banner\Create\" />
+    <Folder Include="SiteEntities\Banner\Edit\" />
+    <Folder Include="SiteEntities\Slider\Create\" />
+    <Folder Include="SiteEntities\Slider\Edit\" />
+    <Folder Include="Users\ChargeWallet\" />
+    <Folder Include="Users\EditAddress\" />
+    <Folder Include="Users\Create\" />
+    <Folder Include="Users\DeleteAddress\" />
+    <Folder Include="Users\Edit\" />
+    <Folder Include="Users\AddAddress\" />
+    <Folder Include="Users\Register\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Common\Common.Application\Common.Application.csproj" />
+    <ProjectReference Include="..\..\Common\Common.Domain\Common.Domain.csproj" />
+    <ProjectReference Include="..\Shop.Domain\Shop.Domain.csproj" />
+  </ItemGroup>
+
 </Project>

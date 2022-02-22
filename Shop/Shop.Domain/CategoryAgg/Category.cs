@@ -30,7 +30,6 @@ namespace Shop.Domain.CategoryAgg
             Slug = slug.ToSlug();
             SeoData = seoData;
         }
-
         public void AddChild(string title, string slug, SeoData seoData, IDomainCategoryService domainService)
         {
             Childs.Add(new Category(title,slug,seoData,domainService)
