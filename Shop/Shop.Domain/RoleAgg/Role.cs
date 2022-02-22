@@ -33,6 +33,7 @@ namespace Shop.Domain.RoleAgg
         }
         public void SetPermissions(List<RolePermission> permissions)
         {
+            permissions.ForEach(r=>r.RoleId=Id);
             Permissions = permissions;
         }
     }
