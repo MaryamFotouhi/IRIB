@@ -14,7 +14,7 @@ namespace Shop.Domain.OrderAgg
         {
 
         }
-        public Order(long userId, OrderStatus status)
+        public Order(long userId)
         {
             UserId = userId;
             Status = OrderStatus.Pending;
@@ -48,11 +48,18 @@ namespace Shop.Domain.OrderAgg
 
         public void AddItem(OrderItem item)
         {
-            item.OrderId = Id;
+            ChangeOrderGuard();
+            var oldItem = Items.FirstOrDefault(o => o.InventoryId == item.InventoryId);
+            if (oldItem != null)
+            {
+                oldItem.ChangeCount(item.Count + oldItem.Count);
+                return;
+            }
             Items.Add(item);
         }
         public void DeleteItem(long itemId)
         {
+            ChangeOrderGuard();
             var currentItem = Items.FirstOrDefault(i => i.Id == itemId);
             if (currentItem == null)
             {
@@ -62,6 +69,7 @@ namespace Shop.Domain.OrderAgg
         }
         public void ChangeCountItem(long itemId,int newCount)
         {
+            ChangeOrderGuard();
             var currentItem = Items.FirstOrDefault(i => i.Id == itemId);
             if (currentItem == null)
             {
@@ -76,7 +84,15 @@ namespace Shop.Domain.OrderAgg
         }
         public void Checkout(OrderAddress address)
         {
+            ChangeOrderGuard();
             Address = address;
+        }
+
+        private void ChangeOrderGuard()
+        {
+            if (Status != OrderStatus.Pending){
+                throw new InvalidDomainDataException("امکان ویرایش این سفارش وجود ندارد!");
+            }
         }
     }
 }
