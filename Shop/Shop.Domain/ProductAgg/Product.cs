@@ -68,7 +68,7 @@ namespace Shop.Domain.ProductAgg
             image.ProductId = Id;
             Images.Add(image);
         }
-        public void DeleteImage(long imageId)
+        public string DeleteImage(long imageId)
         {
             var currentImage = Images.FirstOrDefault(i => i.Id == imageId);
             if (currentImage == null)
@@ -76,6 +76,7 @@ namespace Shop.Domain.ProductAgg
                 throw new NullOrEmptyDomainDataException("Image Not Found");
             }
             Images.Remove(currentImage);
+            return currentImage.ImageName;
         }
         public void SetSpecification(List<ProductSpecification> specifications)
         {

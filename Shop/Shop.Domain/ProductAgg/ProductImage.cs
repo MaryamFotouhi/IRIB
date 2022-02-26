@@ -9,10 +9,9 @@ namespace Shop.Domain.ProductAgg
         {
 
         }
-        public ProductImage(long productId, string imageName, int sequence)
+        public ProductImage(string imageName, int sequence)
         {
             NullOrEmptyDomainDataException.CheckString(imageName,nameof(imageName));
-            ProductId = productId;
             ImageName = imageName;
             Sequence = sequence;
         }
