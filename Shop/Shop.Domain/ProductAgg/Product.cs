@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Common.Domain;
+﻿using Common.Domain;
 using Common.Domain.Exceptions;
 using Common.Domain.Utils;
 using Common.Domain.ValueObjects;
 using Shop.Domain.ProductAgg.Services;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Shop.Domain.ProductAgg
 {
@@ -21,7 +18,8 @@ namespace Shop.Domain.ProductAgg
             long subCategoryId, long secondarySubCategoryId, string slug, SeoData seoData,
             IDomainProductService domainService)
         {
-            Guard(title, imageName, description, slug, domainService);
+            NullOrEmptyDomainDataException.CheckString(imageName, nameof(imageName));
+            Guard(title, description, slug, domainService);
             Title = title;
             ImageName = imageName;
             Description = description;
@@ -43,19 +41,23 @@ namespace Shop.Domain.ProductAgg
         public List<ProductImage> Images { get; private set; }
         public List<ProductSpecification> Specifications { get; private set; }
 
-        public void Edit(string title, string imageName, string description, long categoryId,
-            long subCategoryId, long secondarySubCategoryId, string slug, SeoData seoData, 
+        public void Edit(string title, string description, long categoryId,
+            long subCategoryId, long secondarySubCategoryId, string slug, SeoData seoData,
             IDomainProductService domainService)
         {
-            Guard(title, imageName, description, slug, domainService);
+            Guard(title, description, slug, domainService);
             Title = title;
-            ImageName = imageName;
             Description = description;
             CategoryId = categoryId;
             SubCategoryId = subCategoryId;
             SecondarySubCategoryId = secondarySubCategoryId;
             Slug = slug.ToSlug();
             SeoData = seoData;
+        }
+        public void SetProductImage(string imageName)
+        {
+            NullOrEmptyDomainDataException.CheckString(imageName, nameof(imageName));
+            ImageName = imageName;
         }
         public void AddImage(ProductImage image)
         {
@@ -81,10 +83,9 @@ namespace Shop.Domain.ProductAgg
             Specifications = specifications;
         }
 
-        private void Guard(string title, string imageName, string description, string slug, IDomainProductService domainService)
+        private void Guard(string title, string description, string slug, IDomainProductService domainService)
         {
             NullOrEmptyDomainDataException.CheckString(title, nameof(title));
-            NullOrEmptyDomainDataException.CheckString(imageName, nameof(imageName));
             NullOrEmptyDomainDataException.CheckString(description, nameof(description));
             NullOrEmptyDomainDataException.CheckString(slug, nameof(slug));
             if (slug.ToSlug() != Slug)

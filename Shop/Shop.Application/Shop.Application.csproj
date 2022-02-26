@@ -6,9 +6,7 @@
 
   <ItemGroup>
     <Folder Include="Products\AddImage\" />
-    <Folder Include="Products\Create\" />
     <Folder Include="Products\DeleteImage\" />
-    <Folder Include="Products\Edit\" />
     <Folder Include="Roles\Create\" />
     <Folder Include="Roles\Edit\" />
     <Folder Include="Sellers\DeleteInventory\" />
