@@ -67,7 +67,27 @@ namespace Shop.Domain.OrderAgg
             }
             Items.Remove(currentItem);
         }
-        public void ChangeCountItem(long itemId,int newCount)
+        public void IncreaseItemCount(long itemId, int count)
+        {
+            ChangeOrderGuard();
+            var currentItem = Items.FirstOrDefault(i => i.Id == itemId);
+            if (currentItem == null)
+            {
+                throw new NullOrEmptyDomainDataException("Item Not Found");
+            }
+            currentItem.IncreaseCount(count);
+        }
+        public void DecreaseItemCount(long itemId, int count)
+        {
+            ChangeOrderGuard();
+            var currentItem = Items.FirstOrDefault(i => i.Id == itemId);
+            if (currentItem == null)
+            {
+                throw new NullOrEmptyDomainDataException("Item Not Found");
+            }
+            currentItem.DecreaseCount(count);
+        }
+        public void ChangeItemCount(long itemId,int newCount)
         {
             ChangeOrderGuard();
             var currentItem = Items.FirstOrDefault(i => i.Id == itemId);

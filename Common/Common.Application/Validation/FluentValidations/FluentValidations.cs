@@ -22,7 +22,7 @@ namespace Common.Application.Validation.FluentValidations
             });
         }
 
-        public static IRuleBuilderOptionsConditions<T, string> ValidNationalId<T>(this IRuleBuilder<T, string> ruleBuilder, string errorMessage = "کدملی نامعتبر است")
+        public static IRuleBuilderOptionsConditions<T, string> ValidNationalId<T>(this IRuleBuilder<T, string> ruleBuilder, string errorMessage = "کد ملی نامعتبر است")
         {
             return ruleBuilder.Custom((nationalCode, context) =>
             {
