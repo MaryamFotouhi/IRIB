@@ -7,16 +7,16 @@ using Shop.Domain.ProductAgg.Repository;
 
 namespace Shop.Application.Products.DeleteImage
 {
-    public class DeleteProductImageCommandHandler:IBaseCommandHandler<DeleteProductImageCommand>
+    internal class DeleteProductImageCommandHandler:IBaseCommandHandler<DeleteProductImageCommand>
     {
-        public DeleteProductImageCommandHandler(IProductRepository repository, ILocalFileService localFileService)
+        public DeleteProductImageCommandHandler(IProductRepository repository, IFileService fileService)
         {
             _repository = repository;
-            _localFileService = localFileService;
+            _fileService = fileService;
         }
 
         private readonly IProductRepository _repository;
-        private readonly ILocalFileService _localFileService;
+        private readonly IFileService _fileService;
         public async Task<OperationResult> Handle(DeleteProductImageCommand request, CancellationToken cancellationToken)
         {
             var product = await _repository.GetTracking(request.ProductId);
@@ -28,7 +28,7 @@ namespace Shop.Application.Products.DeleteImage
             {
                 var imageName=product.DeleteImage(request.ImageId);
                 await _repository.Save();
-                _localFileService.DeleteFile(Directories.ProductGalleryImages, imageName);
+                _fileService.DeleteFile(Directories.ProductGalleryImages, imageName);
                 return OperationResult.Success();
             }
         }

@@ -9,9 +9,8 @@ namespace Shop.Domain.RoleAgg
         {
 
         }
-        public RolePermission(long roleId, Permission permission)
+        public RolePermission(Permission permission)
         {
-            RoleId = roleId;
             Permission = permission;
         }
         public long RoleId { get; internal set; }

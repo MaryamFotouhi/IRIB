@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Shop.Application.Orders.DecreaseItemCount
 {
-    public class DecreaseOrderItemCountCommandHandler : IBaseCommandHandler<DecreaseOrderItemCountCommand>
+    internal class DecreaseOrderItemCountCommandHandler : IBaseCommandHandler<DecreaseOrderItemCountCommand>
     {
         public DecreaseOrderItemCountCommandHandler(IOrderRepository repository)
         {

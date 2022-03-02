@@ -8,7 +8,7 @@ using Shop.Domain.SellerAgg.Repository;
 
 namespace Shop.Application.Orders.AddItem
 {
-    public class AddOrderItemCommandHandler : IBaseCommandHandler<AddOrderItemCommand>
+    internal class AddOrderItemCommandHandler : IBaseCommandHandler<AddOrderItemCommand>
     {
         public AddOrderItemCommandHandler(IOrderRepository orderRepository, ISellerRepository sellerRepository)
         {

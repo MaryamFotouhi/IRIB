@@ -12,19 +12,19 @@ using Shop.Domain.ProductAgg.Services;
 
 namespace Shop.Application.Products.Edit
 {
-    public class EditProductCommandHandler:IBaseCommandHandler<EditProductCommand>
+    internal class EditProductCommandHandler:IBaseCommandHandler<EditProductCommand>
     {
         public EditProductCommandHandler(IProductRepository repository, IDomainProductService domainService,
-            ILocalFileService localFileService)
+            IFileService fileService)
         {
             _repository = repository;
             _domainService = domainService;
-            _localFileService = localFileService;
+            _fileService = fileService;
         }
 
         private readonly IProductRepository _repository;
         private readonly IDomainProductService _domainService;
-        private readonly ILocalFileService _localFileService;
+        private readonly IFileService _fileService;
         public async Task<OperationResult> Handle(EditProductCommand request, CancellationToken cancellationToken)
         {
             var product = await _repository.GetTracking(request.ProductId);
@@ -40,7 +40,7 @@ namespace Shop.Application.Products.Edit
                 if (request.ImageFile != null)
                 {
                     var imageName =
-                        await _localFileService.SaveFileAndGenerateName(request.ImageFile, Directories.ProductImages);
+                        await _fileService.SaveFileAndGenerateName(request.ImageFile, Directories.ProductImages);
                     product.SetProductImage(imageName);
                 }
                 var specifications = new List<ProductSpecification>();
@@ -54,12 +54,11 @@ namespace Shop.Application.Products.Edit
                 return OperationResult.Success();
             }
         }
-
         private void RemoveOldImage(IFormFile imageFile, string oldImageName)
         {
             if (imageFile != null)
             {
-                _localFileService.DeleteFile(Directories.ProductImages,oldImageName);
+                _fileService.DeleteFile(Directories.ProductImages,oldImageName);
             }
         }
     }

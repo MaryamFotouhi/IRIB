@@ -6,14 +6,13 @@ using Shop.Domain.CategoryAgg.Services;
 
 namespace Shop.Application.Categories.AddChild
 {
-    public class AddChildCategoryCommandHandler:IBaseCommandHandler<AddChildCategoryCommand>
+    internal class AddChildCategoryCommandHandler : IBaseCommandHandler<AddChildCategoryCommand>
     {
         public AddChildCategoryCommandHandler(ICategoryRepository repository, IDomainCategoryService domainService)
         {
             _repository = repository;
             _domainService = domainService;
         }
-
         private readonly ICategoryRepository _repository;
         private readonly IDomainCategoryService _domainService;
         public async Task<OperationResult> Handle(AddChildCategoryCommand request, CancellationToken cancellationToken)

@@ -6,7 +6,7 @@ using Shop.Domain.CommentAgg.Repository;
 
 namespace Shop.Application.Comments.Create
 {
-    public class CreateCommentCommandHandler : IBaseCommandHandler<CreateCommentCommand>
+    internal class CreateCommentCommandHandler : IBaseCommandHandler<CreateCommentCommand>
     {
         public CreateCommentCommandHandler(ICommentRepository repository)
         {
@@ -17,7 +17,7 @@ namespace Shop.Application.Comments.Create
         public async Task<OperationResult> Handle(CreateCommentCommand request, CancellationToken cancellationToken)
         {
             var comment = new Comment(request.UserId, request.ProductId, request.Text);
-            await _repository.Add(comment);
+             _repository.Add(comment);
             await _repository.Save();
             return OperationResult.Success();
         }

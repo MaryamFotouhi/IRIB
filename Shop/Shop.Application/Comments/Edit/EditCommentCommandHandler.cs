@@ -5,7 +5,7 @@ using Shop.Domain.CommentAgg.Repository;
 
 namespace Shop.Application.Comments.Edit
 {
-    public class EditCommentCommandHandler : IBaseCommandHandler<EditCommentCommand>
+    internal class EditCommentCommandHandler : IBaseCommandHandler<EditCommentCommand>
     {
         public EditCommentCommandHandler(ICommentRepository repository)
         {

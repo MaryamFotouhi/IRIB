@@ -11,25 +11,25 @@ using Shop.Domain.ProductAgg.Services;
 
 namespace Shop.Application.Products.Create
 {
-    public class CreateProductCommandHandler : IBaseCommandHandler<CreateProductCommand>
+    internal class CreateProductCommandHandler : IBaseCommandHandler<CreateProductCommand>
     {
         public CreateProductCommandHandler(IProductRepository repository, IDomainProductService domainService,
-            ILocalFileService localFileService)
+            IFileService fileService)
         {
             _repository = repository;
             _domainService = domainService;
-            _localFileService = localFileService;
+            _fileService = fileService;
         }
 
         private readonly IProductRepository _repository;
         private readonly IDomainProductService _domainService;
-        private readonly ILocalFileService _localFileService;
+        private readonly IFileService _fileService;
         public async Task<OperationResult> Handle(CreateProductCommand request, CancellationToken cancellationToken)
         {
-            var imageName = await _localFileService.SaveFileAndGenerateName(request.ImageFile, Directories.ProductImages);
+            var imageName = await _fileService.SaveFileAndGenerateName(request.ImageFile, Directories.ProductImages);
             var product = new Product(request.Title, imageName, request.Description, request.CategoryId,
                 request.SubCategoryId, request.SecondarySubCategoryId, request.Slug, request.SeoData, _domainService);
-            await _repository.Add(product);
+             _repository.Add(product);
             var specifications=new List<ProductSpecification>();
             request.Specifications.ToList().ForEach(specification =>
             {

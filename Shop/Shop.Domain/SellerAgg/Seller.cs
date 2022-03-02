@@ -4,6 +4,7 @@ using System.Linq;
 using Common.Domain;
 using Common.Domain.Exceptions;
 using Shop.Domain.SellerAgg.Enums;
+using Shop.Domain.SellerAgg.Services;
 
 namespace Shop.Domain.SellerAgg
 {
@@ -13,13 +14,17 @@ namespace Shop.Domain.SellerAgg
         {
 
         }
-        public Seller(long userId, string shopName, string nationalCode)
+        public Seller(long userId, string shopName, string nationalCode,IDomainSellerService domainService)
         {
             Guard(shopName, nationalCode);
             UserId = userId;
             ShopName = shopName;
             NationalCode = nationalCode;
             Inventories=new List<SellerInventory>();
+            if (domainService.CheckSellerInfo(this)==false)
+            {
+                throw new InvalidDomainDataException("اطلاعات نامعتبر است!");
+            }
         }
 
         public long UserId { get; private set; }
@@ -29,13 +34,20 @@ namespace Shop.Domain.SellerAgg
         public DateTime? LastUpdate { get; private set; }
         public List<SellerInventory> Inventories { get; private set; }
 
-        public void Edit(string shopName, string nationalCode)
+        public void Edit(string shopName, string nationalCode,SellerStatus status,IDomainSellerService domainService)
         {
             Guard(shopName, nationalCode);
+            if (nationalCode != NationalCode)
+            {
+                if (domainService.NationalCodeIsExist(nationalCode))
+                {
+                    throw new InvalidDomainDataException("کد ملی متعلق به شخص دیگری است!");
+                }
+            }
             ShopName = shopName;
             NationalCode = nationalCode;
+            Status = status;
         }
-
         public void AddInventory(SellerInventory inventory)
         {
             if (Inventories.Any(i => i.ProductId == inventory.ProductId) == null)
@@ -44,15 +56,14 @@ namespace Shop.Domain.SellerAgg
             }
             Inventories.Add(inventory);
         }
-        public void EditInventory(SellerInventory inventory)
+        public void EditInventory(long inventoryId,int count,int price,int? discountPercentage)
         {
-            var currentInventory = Inventories.FirstOrDefault(i => i.Id == inventory.Id);
+            var currentInventory = Inventories.FirstOrDefault(i => i.Id == inventoryId);
             if (currentInventory == null)
             {
                 throw new NullOrEmptyDomainDataException("Inventory Not Found");
             }
-            Inventories.Remove(currentInventory);
-            Inventories.Add(inventory);
+            currentInventory.Edit(count,price, discountPercentage);
         }
         public void DeleteInventory(long inventoryId)
         {

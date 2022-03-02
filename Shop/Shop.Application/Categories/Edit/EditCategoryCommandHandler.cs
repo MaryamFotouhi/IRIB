@@ -6,7 +6,7 @@ using Shop.Domain.CategoryAgg.Services;
 
 namespace Shop.Application.Categories.Edit
 {
-    public class EditCategoryCommandHandler:IBaseCommandHandler<EditCategoryCommand>
+    internal class EditCategoryCommandHandler : IBaseCommandHandler<EditCategoryCommand>
     {
         public EditCategoryCommandHandler(ICategoryRepository repository, IDomainCategoryService domainService)
         {
@@ -18,14 +18,14 @@ namespace Shop.Application.Categories.Edit
         private readonly IDomainCategoryService _domainService;
         public async Task<OperationResult> Handle(EditCategoryCommand request, CancellationToken cancellationToken)
         {
-            var category =await _repository.GetTracking(request.Id);
+            var category = await _repository.GetTracking(request.Id);
             if (category == null)
             {
                 return OperationResult.NotFound();
             }
             else
             {
-                category.Edit(request.Title,request.Slug,request.SeoData,_domainService);
+                category.Edit(request.Title, request.Slug, request.SeoData, _domainService);
                 //_repository.Update(category);
                 await _repository.Save();
                 return OperationResult.Success();

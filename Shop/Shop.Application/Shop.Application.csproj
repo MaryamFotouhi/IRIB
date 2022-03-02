@@ -5,25 +5,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Roles\Create\" />
-    <Folder Include="Roles\Edit\" />
-    <Folder Include="Sellers\DeleteInventory\" />
-    <Folder Include="Sellers\EditInventory\" />
-    <Folder Include="Sellers\Create\" />
-    <Folder Include="Sellers\Edit\" />
     <Folder Include="Sellers\ChangeStatus\" />
-    <Folder Include="Sellers\AddInventory\" />
-    <Folder Include="SiteEntities\Banner\" />
-    <Folder Include="SiteEntities\Banner\Create\" />
-    <Folder Include="SiteEntities\Banner\Edit\" />
-    <Folder Include="SiteEntities\Slider\Create\" />
-    <Folder Include="SiteEntities\Slider\Edit\" />
     <Folder Include="Users\ChargeWallet\" />
-    <Folder Include="Users\EditAddress\" />
-    <Folder Include="Users\Create\" />
     <Folder Include="Users\DeleteAddress\" />
-    <Folder Include="Users\Edit\" />
-    <Folder Include="Users\AddAddress\" />
     <Folder Include="Users\Register\" />
   </ItemGroup>
 

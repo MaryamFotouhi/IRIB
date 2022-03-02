@@ -23,6 +23,7 @@ namespace Shop.Domain.UserAgg
             Email = email;
             Password = password;
             Gender = gender;
+            AvatarName = "Avatar.png";
         }
 
         public string Name { get; private set; }
@@ -31,6 +32,7 @@ namespace Shop.Domain.UserAgg
         public string Email { get; private set; }
         public string Password { get; private set; }
         public Gender Gender { get; private set; }
+        public string AvatarName { get; private set; }
         public List<UserRole> Roles { get; private set; }
         public List<Wallet> Wallets { get; private set; }
         public List<UserAddress> Addresses { get; private set; }
@@ -53,15 +55,15 @@ namespace Shop.Domain.UserAgg
             address.UserId = Id;
             Addresses.Add(address);
         }
-        public void EditAddress(UserAddress address)
+        public void EditAddress(UserAddress address,long addressId)
         {
-            var oldAddress = Addresses.FirstOrDefault(a => a.Id == address.Id);
+            var oldAddress = Addresses.FirstOrDefault(a => a.Id == addressId);
             if (oldAddress == null)
             {
                 throw new NullOrEmptyDomainDataException("Address Not Found");
             }
-            Addresses.Remove(oldAddress);
-            Addresses.Add(address);
+            address.Edit(address.Shire, address.City, address.PostalCode, address.PostalAddress,
+                address.PhoneNumber, address.Name, address.Family, address.NationalCode);
         }
         public void DeleteAddress(long addressId)
         {
@@ -82,6 +84,15 @@ namespace Shop.Domain.UserAgg
             roles.ForEach(r => r.UserId = Id);
             Roles.Clear();
             Roles.AddRange(roles);
+        }
+
+        public void SetAvatar(string imageName)
+        {
+            if (string.IsNullOrWhiteSpace(imageName))
+            {
+                AvatarName = "Avatar.png";
+            }
+            AvatarName = imageName;
         }
         private void Guard(string phoneNumber, string email, IDomainUserService domainService)
         {

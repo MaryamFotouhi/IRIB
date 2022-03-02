@@ -5,7 +5,7 @@ using Shop.Domain.CommentAgg.Repository;
 
 namespace Shop.Application.Comments.ChangeStatus
 {
-    public class ChangeStatusCommentCommandHandler:IBaseCommandHandler<ChangeStatusCommentCommand>
+    internal class ChangeStatusCommentCommandHandler:IBaseCommandHandler<ChangeStatusCommentCommand>
     {
         public ChangeStatusCommentCommandHandler(ICommentRepository repository)
         {

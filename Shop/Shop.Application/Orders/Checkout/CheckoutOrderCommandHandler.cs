@@ -6,7 +6,7 @@ using Shop.Domain.OrderAgg.Repository;
 
 namespace Shop.Application.Orders.Checkout
 {
-    public class CheckoutOrderCommandHandler:IBaseCommandHandler<CheckoutOrderCommand>
+    internal class CheckoutOrderCommandHandler:IBaseCommandHandler<CheckoutOrderCommand>
     {
         public CheckoutOrderCommandHandler(IOrderRepository repository)
         {

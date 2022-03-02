@@ -5,7 +5,7 @@ using Shop.Domain.OrderAgg.Repository;
 
 namespace Shop.Application.Orders.DeleteItem
 {
-    public class DeleteOrderItemCommandHandler : IBaseCommandHandler<DeleteOrderItemCommand>
+    internal class DeleteOrderItemCommandHandler : IBaseCommandHandler<DeleteOrderItemCommand>
     {
         public DeleteOrderItemCommandHandler(IOrderRepository repository)
         {

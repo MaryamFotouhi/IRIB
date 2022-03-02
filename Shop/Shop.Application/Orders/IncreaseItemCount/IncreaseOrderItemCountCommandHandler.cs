@@ -5,7 +5,7 @@ using Shop.Domain.OrderAgg.Repository;
 
 namespace Shop.Application.Orders.IncreaseItemCount
 {
-    public class IncreaseOrderItemCountCommandHandler:IBaseCommandHandler<IncreaseOrderItemCountCommand>
+    internal class IncreaseOrderItemCountCommandHandler:IBaseCommandHandler<IncreaseOrderItemCountCommand>
     {
         public IncreaseOrderItemCountCommandHandler(IOrderRepository repository)
         {
