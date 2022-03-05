@@ -37,9 +37,9 @@ namespace Shop.Domain.UserAgg
         public List<Wallet> Wallets { get; private set; }
         public List<UserAddress> Addresses { get; private set; }
 
-        public static User Register(string phoneNumber, string email, string password, IDomainUserService domainService)
+        public static User Register(string phoneNumber, string password, IDomainUserService domainService)
         {
-            return new User("", "", phoneNumber, email, password, Enums.Gender.None, domainService);
+            return new User("", "", phoneNumber, "", password, Gender.None, domainService);
         }
         public void Edit(string name, string family, string phoneNumber, string email, Gender gender, IDomainUserService domainService)
         {

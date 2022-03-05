@@ -6,9 +6,6 @@
 
   <ItemGroup>
     <Folder Include="Sellers\ChangeStatus\" />
-    <Folder Include="Users\ChargeWallet\" />
-    <Folder Include="Users\DeleteAddress\" />
-    <Folder Include="Users\Register\" />
   </ItemGroup>
 
   <ItemGroup>
