@@ -9,7 +9,9 @@ namespace Shop.Application.SiteEntities.Banners.Edit
         public EditBannerCommandValidator()
         {
             RuleFor(r => r.Link)
-                .NotNull().NotEmpty().WithMessage(ValidationMessages.required("لینک"));
+                .NotNull()
+                .NotEmpty()
+                .WithMessage(ValidationMessages.required("لینک"));
 
             RuleFor(r => r.ImageFile)
                 .JustImageFile();

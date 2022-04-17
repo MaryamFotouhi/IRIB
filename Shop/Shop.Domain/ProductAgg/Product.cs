@@ -10,40 +10,43 @@ namespace Shop.Domain.ProductAgg
 {
     public class Product : AggregateRoot
     {
-        private Product()
-        {
-
-        }
-        public Product(string title, string imageName, string description, long categoryId,
-            long subCategoryId, long secondarySubCategoryId, string slug, SeoData seoData,
-            IDomainProductService domainService)
-        {
-            NullOrEmptyDomainDataException.CheckString(imageName, nameof(imageName));
-            Guard(title, description, slug, domainService);
-            Title = title;
-            ImageName = imageName;
-            Description = description;
-            CategoryId = categoryId;
-            SubCategoryId = subCategoryId;
-            SecondarySubCategoryId = secondarySubCategoryId;
-            Slug = slug.ToSlug();
-            SeoData = seoData;
-        }
-
         public string Title { get; private set; }
         public string ImageName { get; private set; }
         public string Description { get; private set; }
         public long CategoryId { get; private set; }
         public long SubCategoryId { get; private set; }
-        public long SecondarySubCategoryId { get; private set; }
+        public long? SecondarySubCategoryId { get; private set; }
         public string Slug { get; private set; }
         public SeoData SeoData { get; private set; }
         public List<ProductImage> Images { get; private set; }
         public List<ProductSpecification> Specifications { get; private set; }
 
+        private Product()
+        {
+
+        }
+
+        public Product(string title, string imageName, string description, long categoryId,
+            long subCategoryId, long? secondarySubCategoryId, string slug, SeoData seoData,
+            IProductDomainService domainService)
+        {
+            NullOrEmptyDomainDataException.CheckString(imageName, nameof(imageName));
+            Guard(title, description, slug, domainService);
+            Title = title;
+            ImageName = imageName;
+            Description = description;
+            CategoryId = categoryId;
+            SubCategoryId = subCategoryId;
+            SecondarySubCategoryId = secondarySubCategoryId;
+            Slug = slug.ToSlug();
+            SeoData = seoData;
+            Images=new List<ProductImage>();
+            Specifications=new List<ProductSpecification>();
+        }
+
         public void Edit(string title, string description, long categoryId,
-            long subCategoryId, long secondarySubCategoryId, string slug, SeoData seoData,
-            IDomainProductService domainService)
+            long subCategoryId, long? secondarySubCategoryId, string slug, SeoData seoData,
+            IProductDomainService domainService)
         {
             Guard(title, description, slug, domainService);
             Title = title;
@@ -54,48 +57,51 @@ namespace Shop.Domain.ProductAgg
             Slug = slug.ToSlug();
             SeoData = seoData;
         }
+
         public void SetProductImage(string imageName)
         {
             NullOrEmptyDomainDataException.CheckString(imageName, nameof(imageName));
             ImageName = imageName;
         }
+
         public void AddImage(ProductImage image)
         {
             if (image == null)
-            {
-                throw new NullOrEmptyDomainDataException("Image Not Found");
-            }
+                throw new NullOrEmptyDomainDataException("Image Not Found!");
+
             image.ProductId = Id;
             Images.Add(image);
         }
+
         public string DeleteImage(long imageId)
         {
             var currentImage = Images.FirstOrDefault(i => i.Id == imageId);
             if (currentImage == null)
-            {
-                throw new NullOrEmptyDomainDataException("Image Not Found");
-            }
+                throw new NullOrEmptyDomainDataException("Image Not Found!");
+
             Images.Remove(currentImage);
             return currentImage.ImageName;
         }
+
         public void SetSpecification(List<ProductSpecification> specifications)
         {
             specifications.ForEach(s => s.ProductId = Id);
-            Specifications = specifications;
+            Specifications.Clear();
+            Specifications.AddRange(specifications);
+            //Specifications = specifications;
         }
 
-        private void Guard(string title, string description, string slug, IDomainProductService domainService)
+        private void Guard(string title, string description, string slug, IProductDomainService domainService)
         {
             NullOrEmptyDomainDataException.CheckString(title, nameof(title));
+
             NullOrEmptyDomainDataException.CheckString(description, nameof(description));
+
             NullOrEmptyDomainDataException.CheckString(slug, nameof(slug));
+
             if (slug.ToSlug() != Slug)
-            {
                 if (domainService.SlugIsExist(slug.ToSlug()))
-                {
                     throw new SlugIsDuplicateException();
-                }
-            }
         }
     }
 }

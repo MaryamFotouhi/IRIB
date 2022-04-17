@@ -8,7 +8,9 @@ namespace Shop.Application.Roles.Edit
         public EditRoleCommandValidator()
         {
             RuleFor(r => r.Title)
-                .NotNull().NotEmpty().WithMessage(ValidationMessages.required("عنوان"));
+                .NotNull()
+                .NotEmpty()
+                .WithMessage(ValidationMessages.required("عنوان"));
         }
     }
 }

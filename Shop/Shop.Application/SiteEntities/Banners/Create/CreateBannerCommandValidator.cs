@@ -9,10 +9,14 @@ namespace Shop.Application.SiteEntities.Banners.Create
         public CreateBannerCommandValidator()
         {
             RuleFor(r => r.Link)
-                .NotNull().NotEmpty().WithMessage(ValidationMessages.required("لینک"));
+                .NotNull()
+                .NotEmpty()
+                .WithMessage(ValidationMessages.required("لینک"));
 
             RuleFor(r => r.ImageFile)
-                .NotNull().NotEmpty().WithMessage(ValidationMessages.required("تصویر"))
+                .NotNull()
+                .NotEmpty()
+                .WithMessage(ValidationMessages.required("تصویر"))
                 .JustImageFile();
         }
     }

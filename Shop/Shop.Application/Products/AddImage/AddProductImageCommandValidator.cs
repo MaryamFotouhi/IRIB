@@ -9,11 +9,13 @@ namespace Shop.Application.Products.AddImage
         public AddProductImageCommandValidator()
         {
             RuleFor(r => r.ImageFile)
-                .NotNull().WithMessage(ValidationMessages.required("تصویر"))
+                .NotNull()
+                .WithMessage(ValidationMessages.required("تصویر"))
                 .JustImageFile();
 
             RuleFor(r => r.Sequence)
-                .GreaterThanOrEqualTo(0).WithMessage("ترتیب باید بیشتر از -1 باشد!");
+                .GreaterThanOrEqualTo(0)
+                .WithMessage("ترتیب باید بیشتر از -1 باشد!");
         }
     }
 }

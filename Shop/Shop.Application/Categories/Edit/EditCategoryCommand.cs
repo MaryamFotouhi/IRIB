@@ -5,6 +5,11 @@ namespace Shop.Application.Categories.Edit
 {
     public class EditCategoryCommand:IBaseCommand
     {
+        public long Id { get; private set; }
+        public string Title { get; private set; }
+        public string Slug { get; private set; }
+        public SeoData SeoData { get; private set; }
+
         public EditCategoryCommand(long id, string title, string slug, SeoData seoData)
         {
             Id = id;
@@ -12,10 +17,5 @@ namespace Shop.Application.Categories.Edit
             Slug = slug;
             SeoData = seoData;
         }
-
-        public long Id { get; private set; }
-        public string Title { get; private set; }
-        public string Slug { get; private set; }
-        public SeoData SeoData { get; private set; }
     }
 }

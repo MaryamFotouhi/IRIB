@@ -6,6 +6,11 @@ namespace Shop.Application.SiteEntities.Banners.Edit
 {
     public class EditBannerCommand : IBaseCommand
     {
+        public long Id { get; private set; }
+        public string Link { get; private set; }
+        public IFormFile ImageFile { get; private set; }
+        public BannerPosition Position { get; private set; }
+
         public EditBannerCommand(long id, string link, IFormFile imageFile, BannerPosition position)
         {
             Id = id;
@@ -13,10 +18,5 @@ namespace Shop.Application.SiteEntities.Banners.Edit
             ImageFile = imageFile;
             Position = position;
         }
-
-        public long Id { get; private set; }
-        public string Link { get; private set; }
-        public IFormFile ImageFile { get; private set; }
-        public BannerPosition Position { get; private set; }
     }
 }

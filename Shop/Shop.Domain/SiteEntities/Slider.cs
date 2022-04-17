@@ -3,8 +3,13 @@ using Common.Domain.Exceptions;
 
 namespace Shop.Domain.SiteEntities
 {
-    public class Slider:BaseEntity
+    public class Slider : BaseEntity
     {
+        
+        public string Title { get; private set; }
+        public string Link { get; private set; }
+        public string ImageName { get; private set; }
+
         public Slider(string title, string link, string imageName)
         {
             Guard(title, link, imageName);
@@ -13,17 +18,14 @@ namespace Shop.Domain.SiteEntities
             ImageName = imageName;
         }
 
-        public string Title { get; private set; }
-        public string Link { get; private set; }
-        public string ImageName { get; private set; }
-
         public void Edit(string title, string link, string imageName)
         {
-            Guard(title,link, imageName);
+            Guard(title, link, imageName);
             Title = title;
             Link = link;
             ImageName = imageName;
         }
+
         private void Guard(string title, string link, string imageName)
         {
             NullOrEmptyDomainDataException.CheckString(title, nameof(title));

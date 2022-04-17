@@ -13,7 +13,11 @@ namespace Shop.Application.Products.Create
 {
     internal class CreateProductCommandHandler : IBaseCommandHandler<CreateProductCommand>
     {
-        public CreateProductCommandHandler(IProductRepository repository, IDomainProductService domainService,
+        private readonly IProductRepository _repository;
+        private readonly IProductDomainService _domainService;
+        private readonly IFileService _fileService;
+
+        public CreateProductCommandHandler(IProductRepository repository, IProductDomainService domainService,
             IFileService fileService)
         {
             _repository = repository;
@@ -21,9 +25,6 @@ namespace Shop.Application.Products.Create
             _fileService = fileService;
         }
 
-        private readonly IProductRepository _repository;
-        private readonly IDomainProductService _domainService;
-        private readonly IFileService _fileService;
         public async Task<OperationResult> Handle(CreateProductCommand request, CancellationToken cancellationToken)
         {
             var imageName = await _fileService.SaveFileAndGenerateName(request.ImageFile, Directories.ProductImages);
@@ -36,7 +37,6 @@ namespace Shop.Application.Products.Create
                 specifications.Add(new ProductSpecification(specification.Key, specification.Value));
             });
             product.SetSpecification(specifications);
- 
             await _repository.Save();
             return OperationResult.Success();
         }

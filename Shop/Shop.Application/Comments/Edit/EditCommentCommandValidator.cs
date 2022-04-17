@@ -8,7 +8,11 @@ namespace Shop.Application.Comments.Edit
         public EditCommentCommandValidator()
         {
             RuleFor(r => r.Text)
-                .NotNull().MinimumLength(5).WithMessage(ValidationMessages.minLength("متن نظر", 5));
+                .NotNull()
+                .NotEmpty()
+                .WithMessage(ValidationMessages.required("متن نظر"))
+                .MinimumLength(5)
+                .WithMessage(ValidationMessages.minLength("متن نظر", 5));
         }
     }
 }

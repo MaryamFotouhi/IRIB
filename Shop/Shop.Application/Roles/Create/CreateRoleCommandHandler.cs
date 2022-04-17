@@ -9,12 +9,13 @@ namespace Shop.Application.Roles.Create
 {
     internal class CreateRoleCommandHandler : IBaseCommandHandler<CreateRoleCommand>
     {
+        private readonly IRoleRepository _repository;
+
         public CreateRoleCommandHandler(IRoleRepository repository)
         {
             _repository = repository;
         }
 
-        private readonly IRoleRepository _repository;
         public async Task<OperationResult> Handle(CreateRoleCommand request, CancellationToken cancellationToken)
         {
             var permissions = new List<RolePermission>();

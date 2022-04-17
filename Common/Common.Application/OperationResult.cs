@@ -2,7 +2,8 @@
 {
     public class OperationResult<TData>
     {
-        public const string SuccessMessage = "عملیات با موفقیت انجام شد";
+        public const string SuccessMessage = "عملیات با موفقیت انجام شد!";
+        public const string ErrorMessage = "عملیات با شکست مواجه شد!";
 
         public string Message { get; set; }
         public string Title { get; set; } = null;
@@ -13,7 +14,7 @@
             return new OperationResult<TData>()
             {
                 Status = OperationResultStatus.Success,
-                Title = SuccessMessage,
+                Message = SuccessMessage,
                 Data = data,
             };
         }
@@ -26,12 +27,22 @@
                 Data = default(TData),
             };
         }
+        public static OperationResult<TData> Error(string message= ErrorMessage)
+        {
+            return new OperationResult<TData>()
+            {
+                Status = OperationResultStatus.NotFound,
+                Title = "مشکلی در عملیات رخ داده!",
+                Data = default(TData),
+                Message = message
+            };
+        }
     }
     public class OperationResult
     {
-        public const string SuccessMessage = "عملیات با موفقیت انجام شد";
-        public const string ErrorMessage = "عملیات با شکست مواجه شد";
-        public const string NotFoundMessage = "اطلاعات یافت نشد";
+        public const string SuccessMessage = "عملیات با موفقیت انجام شد!";
+        public const string ErrorMessage = "عملیات با شکست مواجه شد!";
+        public const string NotFoundMessage = "!اطلاعات یافت نشد";
         public string Message { get; set; }
         public string Title { get; set; } = null;
         public OperationResultStatus Status { get; set; }

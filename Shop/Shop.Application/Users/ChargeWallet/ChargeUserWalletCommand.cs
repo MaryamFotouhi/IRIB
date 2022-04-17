@@ -6,6 +6,12 @@ namespace Shop.Application.Users.ChargeWallet
 {
     public class ChargeUserWalletCommand:IBaseCommand
     {
+        public long UserId { get; private set; }
+        public int Price { get; private set; }
+        public string Description { get; private set; }
+        public bool IsFinally { get; private set; }
+        public WalletType Type { get; private set; }
+
         public ChargeUserWalletCommand(long userId, int price, string description, bool isFinally, WalletType type)
         {
             UserId = userId;
@@ -14,11 +20,5 @@ namespace Shop.Application.Users.ChargeWallet
             IsFinally = isFinally;
             Type = type;
         }
-
-        public long UserId { get; private set; }
-        public int Price { get; private set; }
-        public string Description { get; private set; }
-        public bool IsFinally { get; private set; }
-        public WalletType Type { get; private set; }
     }
 }

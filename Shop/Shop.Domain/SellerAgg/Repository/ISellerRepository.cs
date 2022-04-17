@@ -1,10 +1,9 @@
-﻿using System.Threading.Tasks;
-using Common.Domain.Repository;
-using Shop.Domain.CategoryAgg;
+﻿using Common.Domain.Repository;
+using System.Threading.Tasks;
 
 namespace Shop.Domain.SellerAgg.Repository
 {
-    public interface ISellerRepository:IBaseRepository<Seller>
+    public interface ISellerRepository : IBaseRepository<Seller>
     {
         Task<SellerInventoryResult> GetInventoryById(long id);
     }

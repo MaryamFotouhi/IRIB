@@ -8,7 +8,9 @@ namespace Shop.Domain.OrderAgg
         {
 
         }
-        public OrderAddress(string shire, string city, string postalCode, string postalAddress, string phoneNumber, string name, string family, string nationalCode)
+
+        public OrderAddress(string shire, string city, string postalCode, string postalAddress, 
+            string phoneNumber, string name, string family, string nationalCode)
         {
             Shire = shire;
             City = city;

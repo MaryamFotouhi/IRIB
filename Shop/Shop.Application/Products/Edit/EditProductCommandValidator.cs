@@ -9,16 +9,22 @@ namespace Shop.Application.Products.Edit
         public EditProductCommandValidator()
         {
             RuleFor(r => r.Title)
-                .NotNull().NotEmpty().WithMessage(ValidationMessages.required("عنوان"));
+                .NotNull()
+                .NotEmpty()
+                .WithMessage(ValidationMessages.required("عنوان"));
 
             RuleFor(r => r.Description)
-                .NotNull().NotEmpty().WithMessage(ValidationMessages.required("توضیحات"));
+                .NotNull()
+                .NotEmpty()
+                .WithMessage(ValidationMessages.required("توضیحات"));
 
             RuleFor(r => r.ImageFile)
                 .JustImageFile();
 
             RuleFor(r => r.Slug)
-                .NotNull().NotEmpty().WithMessage(ValidationMessages.required("Slug"));
+                .NotNull()
+                .NotEmpty()
+                .WithMessage(ValidationMessages.required("Slug"));
         }
     }
 }

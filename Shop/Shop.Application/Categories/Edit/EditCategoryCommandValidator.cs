@@ -8,10 +8,14 @@ namespace Shop.Application.Categories.Edit
         public EditCategoryCommandValidator()
         {
             RuleFor(r => r.Title)
-                .NotNull().NotEmpty().WithMessage(ValidationMessages.required("عنوان"));
+                .NotNull()
+                .NotEmpty()
+                .WithMessage(ValidationMessages.required("عنوان"));
 
             RuleFor(r => r.Slug)
-                .NotNull().NotEmpty().WithMessage(ValidationMessages.required("Slug"));
+                .NotNull()
+                .NotEmpty()
+                .WithMessage(ValidationMessages.required("Slug"));
         }
     }
 }

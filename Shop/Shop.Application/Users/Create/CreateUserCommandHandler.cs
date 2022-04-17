@@ -10,14 +10,15 @@ namespace Shop.Application.Users.Create
 {
     internal class CreateUserCommandHandler:IBaseCommandHandler<CreateUserCommand>
     {
-        public CreateUserCommandHandler(IUserRepository repository, IDomainUserService domainService)
+        private readonly IUserRepository _repository;
+        private readonly IUserDomainService _domainService;
+
+        public CreateUserCommandHandler(IUserRepository repository, IUserDomainService domainService)
         {
             _repository = repository;
             _domainService = domainService;
         }
 
-        private readonly IUserRepository _repository;
-        private readonly IDomainUserService _domainService;
         public async Task<OperationResult> Handle(CreateUserCommand request, CancellationToken cancellationToken)
         {
             var password = Sha256Hasher.Hash(request.Password);

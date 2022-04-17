@@ -6,6 +6,7 @@
         {
 
         }
+
         public SlugIsDuplicateException(string message) : base(message)
         {
 

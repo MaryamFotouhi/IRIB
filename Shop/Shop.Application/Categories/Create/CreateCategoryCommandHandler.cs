@@ -7,23 +7,23 @@ using Shop.Domain.CategoryAgg.Services;
 
 namespace Shop.Application.Categories.Create
 {
-    internal class CreateCategoryCommandHandler : IBaseCommandHandler<CreateCategoryCommand>
+    internal class CreateCategoryCommandHandler : IBaseCommandHandler<CreateCategoryCommand,long>
     {
-        public CreateCategoryCommandHandler(ICategoryRepository repository, IDomainCategoryService domainService)
+        private readonly ICategoryRepository _repository;
+        private readonly ICategoryDomainService _domainService;
+
+        public CreateCategoryCommandHandler(ICategoryRepository repository, ICategoryDomainService domainService)
         {
             _repository = repository;
             _domainService = domainService;
         }
 
-        private readonly ICategoryRepository _repository;
-        private readonly IDomainCategoryService _domainService;
-        public async Task<OperationResult> Handle(CreateCategoryCommand request, CancellationToken cancellationToken)
+        public async Task<OperationResult<long>> Handle(CreateCategoryCommand request, CancellationToken cancellationToken)
         {
             var category=new Category(request.Title,request.Slug,request.SeoData,_domainService);
              _repository.Add(category);
             await _repository.Save();
-            return OperationResult.Success();
-
+            return OperationResult<long>.Success(category.Id);
         }
     }
 }

@@ -9,13 +9,19 @@ namespace Shop.Application.SiteEntities.Sliders.Create
         public CreateSliderCommandValidator()
         {
             RuleFor(r => r.Title)
-                .NotNull().NotEmpty().WithMessage(ValidationMessages.required("عنوان"));
+                .NotNull()
+                .NotEmpty()
+                .WithMessage(ValidationMessages.required("عنوان"));
 
             RuleFor(r => r.Link)
-                .NotNull().NotEmpty().WithMessage(ValidationMessages.required("لینک"));
+                .NotNull()
+                .NotEmpty()
+                .WithMessage(ValidationMessages.required("لینک"));
 
             RuleFor(r => r.ImageFile)
-                .NotNull().NotEmpty().WithMessage(ValidationMessages.required("تصویر"))
+                .NotNull()
+                .NotEmpty()
+                .WithMessage(ValidationMessages.required("تصویر"))
                 .JustImageFile();
         }
     }

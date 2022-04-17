@@ -8,6 +8,7 @@ namespace Common.Domain.Exceptions
         {
 
         }
+
         public BaseDomainException(string message) : base(message)
         {
 

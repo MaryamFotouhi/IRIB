@@ -9,10 +9,14 @@ namespace Shop.Application.SiteEntities.Sliders.Edit
         public EditSliderCommandValidator()
         {
             RuleFor(r => r.Title)
-                .NotNull().NotEmpty().WithMessage(ValidationMessages.required("عنوان"));
+                .NotNull()
+                .NotEmpty()
+                .WithMessage(ValidationMessages.required("عنوان"));
 
             RuleFor(r => r.Link)
-                .NotNull().NotEmpty().WithMessage(ValidationMessages.required("لینک"));
+                .NotNull()
+                .NotEmpty()
+                .WithMessage(ValidationMessages.required("لینک"));
 
             RuleFor(r => r.ImageFile)
                 .JustImageFile();

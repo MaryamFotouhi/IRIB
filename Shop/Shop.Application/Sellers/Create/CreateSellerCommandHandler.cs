@@ -9,14 +9,14 @@ namespace Shop.Application.Sellers.Create
 {
     internal class CreateSellerCommandHandler:IBaseCommandHandler<CreateSellerCommand>
     {
-        public CreateSellerCommandHandler(ISellerRepository repository, IDomainSellerService domainService)
+        private readonly ISellerRepository _repository;
+        private readonly ISellerDomainService _domainService;
+
+        public CreateSellerCommandHandler(ISellerRepository repository, ISellerDomainService domainService)
         {
             _repository = repository;
             _domainService = domainService;
         }
-
-        private readonly ISellerRepository _repository;
-        private readonly IDomainSellerService _domainService;
 
         public async Task<OperationResult> Handle(CreateSellerCommand request, CancellationToken cancellationToken)
         {

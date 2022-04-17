@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Common.Domain;
@@ -10,17 +11,6 @@ namespace Shop.Domain.OrderAgg
 {
     public class Order : AggregateRoot
     {
-        private Order()
-        {
-
-        }
-        public Order(long userId)
-        {
-            UserId = userId;
-            Status = OrderStatus.Pending;
-            Items = new List<OrderItem>();
-        }
-
         public long UserId { get; private set; }
         public OrderStatus Status { get; private set; }
         public DateTime? LastUpdate { get; private set; }
@@ -28,7 +18,7 @@ namespace Shop.Domain.OrderAgg
         public ShippingMethod? ShippingMethod { get; private set; }
         public OrderDiscount? Discount { get; private set; }
         public List<OrderItem> Items { get; private set; }
-
+        public int ItemCount => Items.Count;
         public int TotalPrice
         {
             get
@@ -44,6 +34,17 @@ namespace Shop.Domain.OrderAgg
                 }
                 return totalPrice;
             }
+        }
+
+        private Order()
+        {
+        }
+
+        public Order(long userId)
+        {
+            UserId = userId;
+            Status = OrderStatus.Pending;
+            Items = new List<OrderItem>();
         }
 
         public void AddItem(OrderItem item)
@@ -62,9 +63,8 @@ namespace Shop.Domain.OrderAgg
             ChangeOrderGuard();
             var currentItem = Items.FirstOrDefault(i => i.Id == itemId);
             if (currentItem == null)
-            {
-                throw new NullOrEmptyDomainDataException("Item Not Found");
-            }
+                throw new NullOrEmptyDomainDataException("Item Not Found!");
+            
             Items.Remove(currentItem);
         }
         public void IncreaseItemCount(long itemId, int count)
@@ -82,26 +82,27 @@ namespace Shop.Domain.OrderAgg
             ChangeOrderGuard();
             var currentItem = Items.FirstOrDefault(i => i.Id == itemId);
             if (currentItem == null)
-            {
-                throw new NullOrEmptyDomainDataException("Item Not Found");
-            }
+                throw new NullOrEmptyDomainDataException("Item Not Found!");
+
             currentItem.DecreaseCount(count);
         }
-        public void ChangeItemCount(long itemId,int newCount)
+
+        public void ChangeItemCount(long itemId, int newCount)
         {
             ChangeOrderGuard();
             var currentItem = Items.FirstOrDefault(i => i.Id == itemId);
             if (currentItem == null)
-            {
-                throw new NullOrEmptyDomainDataException("Item Not Found");
-            }
+                throw new NullOrEmptyDomainDataException("Item Not Found!");
+
             currentItem.ChangeCount(newCount);
         }
+
         public void ChangeStatus(OrderStatus status)
         {
             Status = status;
-            LastUpdate=DateTime.Now;
+            LastUpdate = DateTime.Now;
         }
+
         public void Checkout(OrderAddress address)
         {
             ChangeOrderGuard();
@@ -110,9 +111,8 @@ namespace Shop.Domain.OrderAgg
 
         private void ChangeOrderGuard()
         {
-            if (Status != OrderStatus.Pending){
+            if (Status != OrderStatus.Pending)
                 throw new InvalidDomainDataException("امکان ویرایش این سفارش وجود ندارد!");
-            }
         }
     }
 }

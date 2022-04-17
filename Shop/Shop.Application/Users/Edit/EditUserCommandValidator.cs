@@ -12,11 +12,14 @@ namespace Shop.Application.Users.Edit
                 .JustImageFile();
 
             RuleFor(r => r.PhoneNumber)
-                .NotNull().NotEmpty().WithMessage(ValidationMessages.required("شماره تلفن"))
+                .NotNull()
+                .NotEmpty()
+                .WithMessage(ValidationMessages.required("شماره تلفن"))
                 .ValidPhoneNumber();
 
             RuleFor(r => r.Email)
-                .EmailAddress().WithMessage("ایمیل نامعتبر است!");
+                .EmailAddress()
+                .WithMessage("ایمیل نامعتبر است!");
         }
     }
 }

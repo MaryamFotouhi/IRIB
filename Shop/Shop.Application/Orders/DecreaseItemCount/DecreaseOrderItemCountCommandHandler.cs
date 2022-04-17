@@ -7,25 +7,23 @@ namespace Shop.Application.Orders.DecreaseItemCount
 {
     internal class DecreaseOrderItemCountCommandHandler : IBaseCommandHandler<DecreaseOrderItemCountCommand>
     {
+        private readonly IOrderRepository _repository;
+
         public DecreaseOrderItemCountCommandHandler(IOrderRepository repository)
         {
             _repository = repository;
         }
 
-        private readonly IOrderRepository _repository;
         public async Task<OperationResult> Handle(DecreaseOrderItemCountCommand request, CancellationToken cancellationToken)
         {
             var currentOrder = await _repository.GetCurrentUserOrder(request.UserId);
             if (currentOrder == null)
-            {
                 return OperationResult.NotFound();
-            }
-            else
-            {
-                currentOrder.DecreaseItemCount(request.ItemId, request.Count);
-                await _repository.Save();
-                return OperationResult.Success();
-            }
+
+            currentOrder.DecreaseItemCount(request.ItemId, request.Count);
+            await _repository.Save();
+            return OperationResult.Success();
+
         }
     }
 }

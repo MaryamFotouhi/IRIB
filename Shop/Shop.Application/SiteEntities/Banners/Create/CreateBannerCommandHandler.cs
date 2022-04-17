@@ -10,14 +10,15 @@ namespace Shop.Application.SiteEntities.Banners.Create
 {
     internal class CreateBannerCommandHandler : IBaseCommandHandler<CreateBannerCommand>
     {
+        private readonly IBannerRepository _repository;
+        private readonly IFileService _fileService;
+
         public CreateBannerCommandHandler(IBannerRepository repository, IFileService fileService)
         {
             _repository = repository;
             _fileService = fileService;
         }
 
-        private readonly IBannerRepository _repository;
-        private readonly IFileService _fileService;
         public async Task<OperationResult> Handle(CreateBannerCommand request, CancellationToken cancellationToken)
         {
             var imageName = await _fileService.SaveFileAndGenerateName(request.ImageFile, Directories.BannerImages);
@@ -25,7 +26,6 @@ namespace Shop.Application.SiteEntities.Banners.Create
             _repository.Add(banner);
             await _repository.Save();
             return OperationResult.Success();
-
         }
     }
 }

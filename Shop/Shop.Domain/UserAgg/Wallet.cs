@@ -7,10 +7,18 @@ namespace Shop.Domain.UserAgg
 {
     public class Wallet : BaseEntity
     {
+        public long UserId { get; internal set; }
+        public int Price { get; private set; }
+        public string Description { get; private set; }
+        public bool IsFinally { get; private set; }
+        public DateTime? FinallyDate { get; private set; }
+        public WalletType Type { get; private set; }
+
         private Wallet()
         {
 
         }
+
         public Wallet(int price, string description, bool isFinally, WalletType type)
         {
             if (price < 500)
@@ -20,17 +28,8 @@ namespace Shop.Domain.UserAgg
             IsFinally = isFinally;
             Type = type;
             if (isFinally)
-            {
                 FinallyDate=DateTime.Now;
-            }
         }
-
-        public long UserId { get; internal set; }
-        public int Price { get; private set; }
-        public string Description { get; private set; }
-        public bool IsFinally { get; private set; }
-        public DateTime? FinallyDate { get; private set; }
-        public WalletType Type { get; private set; }
 
         public void Finally(string refCode)
         {

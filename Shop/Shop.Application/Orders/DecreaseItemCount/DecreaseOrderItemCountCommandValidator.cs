@@ -7,7 +7,8 @@ namespace Shop.Application.Orders.DecreaseItemCount
         public DecreaseOrderItemCountCommandValidator()
         {
             RuleFor(r => r.Count)
-                .GreaterThanOrEqualTo(1).WithMessage("تعداد باید بیشتر از 0 بشد!");
+                .GreaterThanOrEqualTo(1)
+                .WithMessage("تعداد باید بیشتر از 0 بشد!");
         }
     }
 }
