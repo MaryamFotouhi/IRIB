@@ -6,11 +6,15 @@ using Shop.Application.Orders.IncreaseItemCount;
 using Shop.Presentation.Facade.Orders;
 using Shop.Query.Orders.DTOs;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using Shop.Api.Infrastructure.Security;
 using Shop.Application.Orders.AddOrderItem;
 using Shop.Application.Orders.DeleteOrderItem;
+using Shop.Domain.RoleAgg.Enums;
 
 namespace Shop.Api.Controllers
 {
+    [Authorize]
     public class OrderController : ApiController
     {
         private readonly IOrderFacade _orderFacade;
@@ -20,6 +24,7 @@ namespace Shop.Api.Controllers
             _orderFacade = orderFacade;
         }
 
+        [PermissionChecker(Permission.Order_Management)]
         [HttpGet]
         public async Task<ApiResult<OrderFilterResult>> GetOrderByFilter([FromQuery] OrderFilterParams filterParams)
         {

@@ -1,4 +1,5 @@
-﻿using Common.Application;
+﻿#nullable enable
+using Common.Application;
 using MediatR;
 using Shop.Application.Users.Create;
 using Shop.Application.Users.Edit;

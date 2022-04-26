@@ -1,11 +1,10 @@
 ﻿#nullable enable
-using System.Threading;
-using System.Threading.Tasks;
 using Common.Query;
 using Dapper;
 using Shop.Infrastructure.Persistent.Dapper;
 using Shop.Query.Sellers.DTOs;
-using Shop.Query.Sellers.Inventories.GetById;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Shop.Query.Sellers.Inventories.GetById
 {
@@ -23,10 +22,10 @@ namespace Shop.Query.Sellers.Inventories.GetById
         {
             using var connection = _context.CreateConnection();
 
-            var sql = @$"SELECT Top(1) i.Id, SellerId , ProductId ,Count , Price,i.CreationDate , DiscountPercentage , s.ShopName,
-                        p.Title as ProductTitle,p.ImageName as ProductImage
-            FROM {_context.Inventories} i inner join {_context.Sellers} s on i.SellerId=s.Id  
-            inner join {_context.Products} p on i.ProductId=p.Id WHERE i.Id=@id";
+            var sql = @$"SELECT Top(1) i.Id,SellerId,ProductId,Count,Price,i.CreationDate,DiscountPercentage,s.ShopName,
+                        p.Title AS ProductTitle,p.ImageName AS ProductImage
+            FROM {_context.Inventories} i INNER JOIN {_context.Sellers} s ON i.SellerId=s.Id  
+            INNER JOIN {_context.Products} p ON i.ProductId=p.Id WHERE i.Id=@id";
 
             var inventory = await connection.QueryFirstOrDefaultAsync<InventoryDto?>(sql, new { id = request.InventoryId });
 

@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿#nullable enable
+using System.Threading.Tasks;
 using Common.Application;
 using Shop.Application.Users.AddToken;
 using Shop.Application.Users.Create;

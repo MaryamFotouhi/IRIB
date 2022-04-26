@@ -29,15 +29,15 @@ namespace Shop.Api.Infrastructure.JwtUtil
                     ValidateAudience = true
                 };
                 option.SaveToken = true;
-                //option.Events = new JwtBearerEvents()
-                //{
-                //    OnTokenValidated = async context =>
-                //    {
-                //        var customValidate = context.HttpContext.RequestServices
-                //            .GetRequiredService<CustomJwtValidation>();
-                //        await customValidate.Validate(context);
-                //    }
-                //};
+                option.Events = new JwtBearerEvents()
+                {
+                    OnTokenValidated = async context =>
+                    {
+                        var customValidate = context.HttpContext.RequestServices
+                            .GetRequiredService<CustomJwtValidation>();
+                        await customValidate.Validate(context);
+                    }
+                };
             });
         }
     }

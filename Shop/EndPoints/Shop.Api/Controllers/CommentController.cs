@@ -1,10 +1,13 @@
 ﻿using System.Threading.Tasks;
 using Common.AspNetCore;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Shop.Api.Infrastructure.Security;
 using Shop.Application.Comments.ChangeStatus;
 using Shop.Application.Comments.Create;
 using Shop.Application.Comments.Edit;
+using Shop.Domain.RoleAgg.Enums;
 using Shop.Presentation.Facade.Comments;
 using Shop.Query.Comments.DTOs;
 
@@ -19,6 +22,7 @@ namespace Shop.Api.Controllers
             _commentFacade = commentFacade;
         }
 
+        [PermissionChecker(Permission.Comment_Management)]
         [HttpGet]
         public async Task<ApiResult<CommentFilterResult>> GetCommentByFilter([FromQuery] CommentFilterParams filterParams)
         {
@@ -26,20 +30,23 @@ namespace Shop.Api.Controllers
             return QueryResult(result);
         }
 
+        [PermissionChecker(Permission.Comment_Management)]
         [HttpGet("{commentId}")]
-        public async Task<ApiResult<CommentDto?>> GetCommentByFilter(long commentId)
+        public async Task<ApiResult<CommentDto?>> GetCommentById(long commentId)
         {
             var result = await _commentFacade.GetCommentById(commentId);
             return QueryResult(result);
         }
 
+        [Authorize]
         [HttpPost]
-        public async Task<ApiResult> GetCommentByFilter(CreateCommentCommand command)
+        public async Task<ApiResult> CreateCommnet(CreateCommentCommand command)
         {
             var result = await _commentFacade.CreateComment(command);
             return CommandResult(result);
         }
 
+        [Authorize]
         [HttpPut]
         public async Task<ApiResult> EditComment(EditCommentCommand command)
         {
@@ -47,6 +54,7 @@ namespace Shop.Api.Controllers
             return CommandResult(result);
         }
 
+        [PermissionChecker(Permission.Comment_Management)]
         [HttpPut("changeStatus")]
         public async Task<ApiResult> ChangeCommentStatus(ChangeStatusCommentCommand command)
         {

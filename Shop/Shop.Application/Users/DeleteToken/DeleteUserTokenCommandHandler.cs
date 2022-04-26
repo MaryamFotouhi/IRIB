@@ -20,7 +20,7 @@ namespace Shop.Application.Users.DeleteToken
             if (user == null)
                 return OperationResult.NotFound();
 
-            user.RemoveToken(request.TokenId);
+            user.DeleteToken(request.Id);
             await _userRepository.Save();
             return OperationResult.Success();
         }

@@ -1,8 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using Common.AspNetCore;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Shop.Api.ViewModels.Users;
 using Shop.Application.Users.AddAddress;
@@ -10,9 +8,12 @@ using Shop.Application.Users.DeleteAddress;
 using Shop.Application.Users.EditAddress;
 using Shop.Presentation.Facade.Users.Addresses;
 using Shop.Query.Users.DTOs;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Shop.Api.Controllers
 {
+    [Authorize]
     public class UserAddressController : ApiController
     {
         private readonly IUserAddressFacade _userAddress;

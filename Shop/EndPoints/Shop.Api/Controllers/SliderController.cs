@@ -6,9 +6,13 @@ using Shop.Presentation.Facade.SiteEntities.Slider;
 using Shop.Query.SiteEntities.Sliders.DTOs;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using Shop.Api.Infrastructure.Security;
+using Shop.Domain.RoleAgg.Enums;
 
 namespace Shop.Api.Controllers
 {
+    [PermissionChecker(Permission.CRUD_Slider)]
     public class SliderController : ApiController
     {
         private readonly ISliderFacade _facade;
@@ -19,6 +23,7 @@ namespace Shop.Api.Controllers
             _facade = facade;
         }
 
+        [AllowAnonymous]
         [HttpGet]
         public async Task<ApiResult<List<SliderDto>>> GetList()
         {

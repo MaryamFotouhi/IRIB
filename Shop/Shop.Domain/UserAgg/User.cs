@@ -113,13 +113,15 @@ namespace Shop.Domain.UserAgg
             var activeTokenCount = Tokens.Count(c => c.RefreshTokenExpireDate > DateTime.Now);
             if (activeTokenCount == 3)
                 throw new InvalidDomainDataException("امکان استفاده همزمان از 4 دستگاه وجود ندارد!");
-            
-            var token = new UserToken(hashJwtToken, hashRefreshToken, tokenExpireDate, refreshTokenExpireDate, device);
-            token.UserId = Id;
+
+            var token = new UserToken(hashJwtToken, hashRefreshToken, tokenExpireDate, refreshTokenExpireDate, device)
+            {
+                UserId = Id
+            };
             Tokens.Add(token);
         }
 
-        public void RemoveToken(long tokenId)
+        public void DeleteToken(long tokenId)
         {
             var token = Tokens.FirstOrDefault(f => f.Id == tokenId);
             if (token == null)

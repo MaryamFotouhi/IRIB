@@ -1,8 +1,10 @@
+using System;
 using Common.Application;
 using Common.Application.FileUtil.Interfaces;
 using Common.Application.FileUtil.Services;
 using Common.AspNetCore;
 using Common.AspNetCore.Middlewares;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -48,14 +50,38 @@ namespace Shop.Api
                     });
                 });
 
-            services.AddSwaggerGen(c =>
+            services.AddSwaggerGen(option =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Shop.Api", Version = "v1" });
+                var jwtSecurityScheme = new OpenApiSecurityScheme
+                {
+                    Scheme = "bearer",
+                    BearerFormat = "JWT",
+                    Name = "JWT Authentication",
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.Http,
+                    Description = "Enter Token",
+
+                    Reference = new OpenApiReference
+                    {
+                        Id = JwtBearerDefaults.AuthenticationScheme,
+                        Type = ReferenceType.SecurityScheme
+                    }
+                };
+
+                option.AddSecurityDefinition(jwtSecurityScheme.Reference.Id, jwtSecurityScheme);
+
+                option.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    { jwtSecurityScheme, Array.Empty<string>() }
+                });
             });
 
             //Connection
             services.RegisterShopDependency(Configuration.GetConnectionString("DefaultConnection"));
+
+            //Authentication JWT
             services.RegisterApiDependency();
+
             CommonBootstrapper.Init(services);
             services.AddTransient<IFileService, FileService>();
 

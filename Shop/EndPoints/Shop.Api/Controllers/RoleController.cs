@@ -6,9 +6,12 @@ using Shop.Presentation.Facade.Roles;
 using Shop.Query.Roles.DTOs;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Shop.Api.Infrastructure.Security;
+using Shop.Domain.RoleAgg.Enums;
 
 namespace Shop.Api.Controllers
 {
+    [PermissionChecker(Permission.Role_Management)]
     public class RoleController : ApiController
     {
         private readonly IRoleFacade _roleFacade;

@@ -6,10 +6,14 @@ using Shop.Application.Products.Edit;
 using Shop.Presentation.Facade.Products;
 using Shop.Query.Products.DTOs;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using Shop.Api.Infrastructure.Security;
 using Shop.Application.Products.DeleteImage;
+using Shop.Domain.RoleAgg.Enums;
 
 namespace Shop.Api.Controllers
 {
+    [PermissionChecker(Permission.CRUD_Product)]
     public class ProductController : ApiController
     {
         private readonly IProductFacade _productFacade;
@@ -19,7 +23,7 @@ namespace Shop.Api.Controllers
             _productFacade = productFacade;
         }
 
-
+        [AllowAnonymous]
         [HttpGet]
         public async Task<ApiResult<ProductFilterResult>> GetProductByFilter([FromQuery] ProductFilterParams filterParams)
         {
@@ -32,8 +36,17 @@ namespace Shop.Api.Controllers
             var product = await _productFacade.GetProductById(productId);
             return QueryResult(product);
         }
+
+        [AllowAnonymous]
+        [HttpGet("Shop")]
+        public async Task<ApiResult<ProductShopResult>> GetProductForShopFilter([FromQuery] ProductShopFilterParam filterParams)
+        {
+            return QueryResult(await _productFacade.GetProductsForShop(filterParams));
+        }
+
+        [AllowAnonymous]
         [HttpGet("{slug}")]
-        public async Task<ApiResult<ProductDto?>> GetProductById(string slug)
+        public async Task<ApiResult<ProductDto?>> GetProductBySlug(string slug)
         {
             var product = await _productFacade.GetProductBySlug(slug);
             return QueryResult(product);

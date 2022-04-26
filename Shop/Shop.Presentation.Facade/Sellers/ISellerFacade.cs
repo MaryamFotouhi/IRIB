@@ -12,7 +12,9 @@ namespace Shop.Presentation.Facade.Sellers
         Task<OperationResult> EditSeller(EditSellerCommand command);
 
         Task<SellerDto?> GetSellerById(long sellerId);
+        Task<SellerDto?> GetSellerByUserId(long userId);
         Task<SellerFilterResult> GetSellersByFilter(SellerFilterParams filterParams);
+
     }
 }
 

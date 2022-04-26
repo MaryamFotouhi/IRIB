@@ -21,7 +21,6 @@ namespace Shop.Application.Users.AddToken
             RefreshTokenExpireDate = refreshTokenExpireDate;
             Device = device;
         }
-
     }
 }
 

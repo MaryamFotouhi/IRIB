@@ -1,4 +1,5 @@
-﻿using Common.Query;
+﻿#nullable enable
+using Common.Query;
 using Shop.Query.Users.DTOs;
 
 namespace Shop.Query.Users.UserTokens.GetByJwtToken

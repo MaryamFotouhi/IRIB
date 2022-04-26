@@ -6,10 +6,10 @@ namespace Common.Domain
     {
         public BaseEntity()
         {
-            CreationDate = new DateTime();
+            CreationDate = DateTime.Now;
         }
 
         public long Id { get; private set; }
-        public DateTime CreationDate { get; }
+        public DateTime CreationDate { get; private set; }
     }
 }

@@ -8,9 +8,13 @@ using Shop.Query.Categories.DTOs;
 using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using Shop.Api.Infrastructure.Security;
+using Shop.Domain.RoleAgg.Enums;
 
 namespace Shop.Api.Controllers
 {
+    [PermissionChecker(Permission.Category_Management)]
     public class CategoryController : ApiController
     {
         private readonly ICategoryFacade _categoryFacade;
@@ -20,6 +24,7 @@ namespace Shop.Api.Controllers
             _categoryFacade = categoryFacade;
         }
 
+        [AllowAnonymous]
         [HttpGet]
         public async Task<ApiResult<List<CategoryDto>>> GetCategories()
         {
@@ -27,6 +32,7 @@ namespace Shop.Api.Controllers
             return QueryResult(result);
         }
 
+        [AllowAnonymous]
         [HttpGet("{id}")]
         public async Task<ApiResult<CategoryDto>> GetCategoryById(long id)
         {

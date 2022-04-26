@@ -8,7 +8,7 @@ namespace Shop.Api.Infrastructure
         public static void RegisterApiDependency(this IServiceCollection service)
         {
             service.AddAutoMapper(typeof(MapperProfile).Assembly);
-            //service.AddTransient<CustomJwtValidation>();
+            service.AddTransient<CustomJwtValidation>();
 
             service.AddCors(options =>
             {

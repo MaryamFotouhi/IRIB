@@ -25,6 +25,17 @@ namespace Common.Query.Filter
             Take = take;
             StartPage = (currentPage - 4 <= 0) ? 1 : currentPage - 4;
         }
+        public void GeneratePaging(int count, int take, int currentPage)
+        {
+            var entityCount = count;
+            var pageCount = (int)Math.Ceiling(entityCount / (double)take);
+            PageCount = pageCount;
+            CurrentPage = currentPage;
+            EndPage = (currentPage + 5 > pageCount) ? pageCount : currentPage + 5;
+            EntityCount = entityCount;
+            Take = take;
+            StartPage = (currentPage - 4 <= 0) ? 1 : currentPage - 4;
+        }
     }
 
     public class BaseFilterParam

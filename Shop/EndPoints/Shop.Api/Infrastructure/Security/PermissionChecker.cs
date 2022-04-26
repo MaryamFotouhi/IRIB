@@ -64,15 +64,17 @@ namespace Shop.Api.Infrastructure.Security
 
             return hasAllowAnonymous;
         }
+
         private async Task<bool> UserHasPermission(AuthorizationFilterContext context)
         {
             var user = await _userFacade.GetUserById(context.HttpContext.User.GetUserId());
             if (user == null)
                 return false;
 
-            var roleIds = user.Roles.Select(r => r.RoleId).ToList();
+            var roleIds = user.Roles.Select(s => s.RoleId).ToList();
             var roles = await _roleFacade.GetRoles();
             var userRoles = roles.Where(r => roleIds.Contains(r.Id));
+
             return userRoles.Any(r => r.Permissions.Contains(_permission));
         }
     }

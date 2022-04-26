@@ -70,20 +70,14 @@ namespace Shop.Api.Controllers
             var result = await _userFacade.GetUserTokenByRefreshToken(refreshToken);
 
             if (result == null)
-            {
                 return CommandResult(OperationResult<LoginResultDto?>.NotFound());
 
-            }
 
             if (result.TokenExpireDate > DateTime.Now)
-            {
-                return CommandResult(OperationResult<LoginResultDto>.Error("توکن هنوز منقضی نشده است!"));
-            }
+                return CommandResult(OperationResult<LoginResultDto?>.Error("توکن هنوز منقضی نشده است!"));
 
             if (result.RefreshTokenExpireDate < DateTime.Now)
-            {
-                return CommandResult(OperationResult<LoginResultDto>.Error("زمان رفرش توکن به پایان رسیده است!"));
-            }
+                return CommandResult(OperationResult<LoginResultDto?>.Error("زمان رفرش توکن به پایان رسیده است!"));
 
             var user = await _userFacade.GetUserById(result.UserId);
             await _userFacade.DeleteToken(new DeleteUserTokenCommand(result.UserId, result.Id));
@@ -107,8 +101,13 @@ namespace Shop.Api.Controllers
         private async Task<OperationResult<LoginResultDto?>> AddTokenAndGenerateJwt(UserDto user)
         {
             var uaParser = Parser.GetDefault();
-            var info = uaParser.Parse(HttpContext.Request.Headers["user-agent"]);
-            var device = $"{info.Device.Family}/{info.OS.Family} {info.OS.Major}.{info.OS.Minor} - {info.UA.Family}";
+            var header = HttpContext.Request.Headers["user-agent"].ToString();
+            var device = "windows";
+            if (header != null)
+            {
+                var info = uaParser.Parse(header);
+                device = $"{info.Device.Family}/{info.OS.Family} {info.OS.Major}.{info.OS.Minor} - {info.UA.Family}";
+            }
 
             var token = JwtTokenBuilder.BuildToken(user, _configuration);
             var refreshToken = Guid.NewGuid().ToString();
